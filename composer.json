@@ -1,0 +1,10 @@
+{
+    "name": "kpolicar/backendlock-plugin",
+    "type": "october-plugin",
+    "description": "Backend lock session for October CMS",
+    "keywords": ["october", "octobercms", "backend", "menu", "lock", "logout", "save", "keep", "protect", "inactive"],
+    "require": {
+        "composer/installers": "~1.0",
+        "ext-json": "*"
+    }
+}

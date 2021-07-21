@@ -1,0 +1,22 @@
+<template id="kpolicar_backendlock_mainmenu-items-extension">
+    <li class="mainmenu-item mainmenu-preview mainmenu-lock"
+        data-submenu-index="lock">
+        <a
+            href="javascript:;"
+        <?php if (!isset($isVerticalMenu)): ?>
+        data-tooltip-text="<?= e(trans('kpolicar.backendlock::lang.menu.item_tooltip')) ?>"
+        <?php endif ?>
+        >
+        <span class="nav-icon">
+            <i class="icon-lock">
+            </i>
+        </span>
+
+        <?php if (isset($isVerticalMenu)): ?>
+        <span class="nav-label">
+            <?= e(trans('kpolicar.backendlock::lang.menu.item_tooltip')) ?>
+        </span>
+        <?php endif ?>
+        </a>
+    </li>
+</template>
