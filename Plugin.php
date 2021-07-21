@@ -38,7 +38,7 @@ class Plugin extends PluginBase
     public function register()
     {
         App::error(function (UnauthorizedException $e) {
-            return e(trans('kpolicar.backendlock::lang.error.unauthorized'));
+            return $e->getMessage() ?: e(trans('kpolicar.backendlock::lang.error.unauthorized'));
         });
     }
 

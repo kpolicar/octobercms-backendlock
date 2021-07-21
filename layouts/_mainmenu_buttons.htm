@@ -4,8 +4,8 @@
         <a
             data-request="onLockSession"
             data-request-confirm="<?= e(trans('kpolicar.backendlock::lang.menu.confirm')) ?>"
-            data-request-success="$(this).parent().addClass('active')"
-            href="javascript:;"
+            data-request-success="$(this).parent().addClass('active');$('#kpolicar_backendlock_modal-login').modal()"
+            href="#">
         <?php if (!isset($isVerticalMenu)): ?>
         data-tooltip-text="<?= e(trans('kpolicar.backendlock::lang.menu.item_tooltip')) ?>"
         <?php endif ?>
@@ -22,4 +22,24 @@
         <?php endif ?>
         </a>
     </li>
+</template>
+
+<template id="template_kpolicar_backendlock_modal-login">
+    <div class="control-popup modal fade" id="kpolicar_backendlock_modal-login"
+         tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <?= e(trans('kpolicar.backendlock::lang.modal.title')) ?>
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <?= $this->makeLayoutPartial('~/plugins/kpolicar/backendlock/layouts/_signin_form', ['attributes' => [
+                        'data-request-success' => '$(".mainmenu-item.mainmenu-lock").removeClass("active")'
+                    ]]); ?>
+                </div>
+            </div>
+        </div>
 </template>

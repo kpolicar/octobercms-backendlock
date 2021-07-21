@@ -13,7 +13,9 @@ class EnforceUserNotLocked
     {
         if ($request->session()->get(LockSessionController::SessionKey)) {
             if ($request->ajax()) {
-                throw new UnauthorizedException("You must re-enter your credentials.");
+                if ($request->header('X_OCTOBER_REQUEST_HANDLER') == 'onUnlockSession')
+                    return $next($request);
+                throw new UnauthorizedException();
             } else {
                 return (new Auth())->signout();
             }
