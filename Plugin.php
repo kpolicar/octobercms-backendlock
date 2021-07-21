@@ -1,7 +1,11 @@
 <?php namespace Kpolicar\BackendLock;
 
+use App;
 use Backend;
 use Backend\Classes\Controller as BackendController;
+use Kpolicar\BackendLock\Behaviors\LockSessionController;
+use Kpolicar\BackendLock\Exceptions\UnauthorizedException;
+use Kpolicar\BackendLock\Middleware\EnforceUserNotLocked;
 use System\Classes\PluginBase;
 use BackendAuth;
 
@@ -19,10 +23,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'BackendLock',
-            'description' => 'No description provided yet...',
-            'author'      => 'Kpolicar',
-            'icon'        => 'icon-leaf'
+            'name'        => 'kpolicar.backendlock::lang.plugin.name',
+            'description' => 'kpolicar.backendlock::lang.plugin.description',
+            'author'      => 'Klemen Janez Poličar',
+            'icon'        => 'icon-lock'
         ];
     }
 
@@ -33,7 +37,9 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
+        App::error(function (UnauthorizedException $e) {
+            return e(trans('kpolicar.backendlock::lang.error.unauthorized'));
+        });
     }
 
     /**
@@ -46,8 +52,12 @@ class Plugin extends PluginBase
         if (!app()->runningInBackend())
             return;
 
+        $this->app['Illuminate\Routing\Router']
+            ->pushMiddlewareToGroup('web', EnforceUserNotLocked::class);
+
         BackendController::extend(function($controller) {
             if (BackendAuth::check()) {
+                $controller->extendClassWith(LockSessionController::class);
                 $controller->addCss('/plugins/kpolicar/backendlock/assets/css/menu.css');
                 $controller->addJs('/plugins/kpolicar/backendlock/assets/js/menu.js', ['defer' => true]);
             }

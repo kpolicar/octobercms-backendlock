@@ -2,6 +2,9 @@
     <li class="mainmenu-item mainmenu-preview mainmenu-lock"
         data-submenu-index="lock">
         <a
+            data-request="onLockSession"
+            data-request-confirm="<?= e(trans('kpolicar.backendlock::lang.menu.confirm')) ?>"
+            data-request-success="$(this).parent().addClass('active')"
             href="javascript:;"
         <?php if (!isset($isVerticalMenu)): ?>
         data-tooltip-text="<?= e(trans('kpolicar.backendlock::lang.menu.item_tooltip')) ?>"
